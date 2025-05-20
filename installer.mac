@@ -1,0 +1,12 @@
+virtualenv .venv --python=python3.11
+source .venv/bin/activate
+pip install -r requirements.txt
+
+
+# Creating super user
+#echo "Adding local superuser (admin)"
+#echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@dcs.com', 'adminpass')" | python manage.py shell
+
+make load-data
+make start
+
