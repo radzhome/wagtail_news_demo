@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.functions import Coalesce
 from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError
 from wagtail.admin.panels import FieldPanel, HelpPanel, InlinePanel, MultiFieldPanel
 from wagtail.fields import RichTextField
 from wagtail.search import index
@@ -79,8 +80,20 @@ class ArticlePage(BasePage):
 
 class NewsListingPage(BasePage):
     template = "pages/news_listing_page.html"
-    subpage_types = ["news.ArticlePage"]
-    max_count = 1  # Allow only one news listing page to keep article pages in one place
+
+    # Allow under root or under another NewsListingPage (1 level deep)
+    parent_page_types = ["wagtailcore.Page", "news.NewsListingPage"]
+
+    # Allow ArticlePages and ONE level of NewsListingPage below
+    subpage_types = ["news.ArticlePage", "news.NewsListingPage"]
+
+    # Optional: restrict max depth
+    def clean(self):
+        super().clean()
+        if self.get_ancestors().type(NewsListingPage).count() >= 2:
+            raise ValidationError("You can only nest NewsListingPages one level deep.")
+
+    # max_count = 1  # Allow only one news listing page to keep article pages in one place
 
     introduction = RichTextField(
         blank=True, features=["bold", "italic", "link"]

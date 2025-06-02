@@ -3,6 +3,14 @@
 https://github.com/wagtail/news-template?tab=readme-ov-file
 This project template is designed for creating [Wagtail](https://wagtail.org) builds quickly, intended for developers to bootstrap their Wagtail site development using `wagtail start --template=`. The template comes with pre-defined pages, blocks, functionalities, and fixtures to streamline the initial setup process.
 
+
+## Requirements for Demo
+
+  * Speed of news (and being able to adjust or use different things depending on the type, tone and importance of the 
+ news).
+  * Being able to adjust blocks of content
+  * Differentiation btwn Brands
+
 ## Getting Started
 
 1. **Check that you have an appropriate version of Python 3** You want to make sure that you have a [compatible version](https://docs.wagtail.org/en/stable/releases/upgrading.html#compatible-django-python-versions) installed:
